@@ -541,7 +541,11 @@ public class ColorPicker extends View {
 			else if (x >= -mColorCenterRadius && x <= mColorCenterRadius
 					&& y >= -mColorCenterRadius && y <= mColorCenterRadius) {
 				mCenterHaloPaint.setAlpha(0x50);
-				setColor(getOldCenterColor());
+				if (x >= 0) {
+					setOldCenterColor(getColor());
+				} else {
+					setColor(getOldCenterColor());
+				}
 				invalidate();
 			}
 			// If user did not press pointer or center, report event not handled
