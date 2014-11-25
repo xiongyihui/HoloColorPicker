@@ -140,6 +140,11 @@ public class ColorPicker extends View {
 	 * The ARGB value of the center with the new selected color.
 	 */
 	private int mCenterNewColor;
+	
+	/**
+	 * The ARGB value of the center with the update color.
+	 */
+	private int mUpdateColor;
 
 	/**
 	 * Number of pixels the origin of this view is moved in X- and Y-direction.
@@ -586,6 +591,7 @@ public class ColorPicker extends View {
 			}
 			break;
 		case MotionEvent.ACTION_UP:
+			updateColor(mCenterNewColor);
 			mUserIsMovingPointer = false;
 			mCenterHaloPaint.setAlpha(0x00);
 			invalidate();
@@ -659,12 +665,10 @@ public class ColorPicker extends View {
 	public void setNewCenterColor(int color) {
 		mCenterNewColor = color;
 		mCenterNewPaint.setColor(color);
-		if (mCenterOldColor == 0) {
+		//if (mCenterOldColor == 0) 
+		{
 			mCenterOldColor = color;
 			mCenterOldPaint.setColor(color);
-		}
-		if (onColorChangedListener != null) {
-			onColorChangedListener.onColorChanged(color);
 		}
 		invalidate();
 	}
@@ -720,6 +724,19 @@ public class ColorPicker extends View {
 		if (mValueBar != null) {
 			mValueBar.setColor(color);
 		}
+	}
+	
+	public void updateColor(int color) {
+		if (color != mUpdateColor) {
+			mUpdateColor = color;
+			if (onColorChangedListener != null) {
+				onColorChangedListener.onColorChanged(color);
+			}
+		}
+	}
+	
+	public int getUpdateColor() {
+		return mUpdateColor;
 	}
 
 	@Override

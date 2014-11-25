@@ -309,6 +309,7 @@ public class SVBar extends View {
 			}
 			break;
 		case MotionEvent.ACTION_UP:
+			mPicker.updateColor(mColor);
 			mIsMovingPointer = false;
 			break;
 		}
